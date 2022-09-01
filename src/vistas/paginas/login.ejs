@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es_ES">
+    <%- include('../partes/header'); %>
+    <%- include('../partes/menu'); %>
+    <body>
+        <div class="row justify-content-center">
+            <div class="col-9">
+              <% if(correo) { %>
+              <h4>Bienvenido</h4> 
+              <h2><%= correo %></h2> 
+                <% }else{ %>
+              <h2>Error: datos mal ingresados</h2>
+              <%   } %>
+            </div>
+          </div>
+
+    </body>
+    <footer>
+        <%- include('../partes/footer'); %>
+    </footer>
+</html>

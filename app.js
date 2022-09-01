@@ -1,9 +1,10 @@
-const express = require("express");
 const dotenv = require("dotenv");
-const path = require("path");
-const app = express();
 dotenv.config();
+const express = require("express");
+const path = require("path");
+const db = require("./src/conexionDb");
 
+const app = express();
 const port = process.env.PUERTO || 4000;
 
 app.use(express.json());
@@ -14,6 +15,8 @@ app.set("views", path.join(__dirname, "/src/vistas"));
 app.set("view engine", "ejs");
 
 // index page
+app.use("/auth", require("./src/rutas/auth.js"));
+
 app.use("/", require("./src/rutas/inicio.js"));
 
 app.use("*", (req, res) => {

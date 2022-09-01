@@ -1,9 +1,3 @@
-const inicio = (req, res) => {
-  res.json({ msg: "holaa" });
+exports.inicio = (req, res) => {
+  res.render("./paginas/inicio", { err: null, correo: null });
 };
-
-const inicio2 = (req, res) => {
-  res.render("./paginas/inicio");
-};
-
-module.exports = { inicio, inicio2 };
