@@ -24,5 +24,5 @@ app.use("*", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Servidor activado en puerto:", port);
+  console.log("Servidor activado:", "http://localhost:" + port);
 });

@@ -3,11 +3,13 @@ const authLogin = async (req, res) => {
   try {
     if (correo) {
       return res.render("./paginas/login", {
-        err: null,
         correo,
+        err: null,
       });
     }
-    res.render("./paginas/inicio", { err: "Error al ingresar" });
+    res.render("./paginas/login", {
+      err: "Usuario o clave incorrectos",
+    });
   } catch (err) {
     console.log(err);
   }

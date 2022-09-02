@@ -3,15 +3,22 @@
     <%- include('../partes/header'); %>
     <%- include('../partes/menu'); %>
     <body>
-        <div class="row justify-content-center">
+        <div class="row text-center justify-content-center">
+
+              <!-- Si pasa las pruebas se muestran los datos -->
+          <% if(!err) { %>            
             <div class="col-9">
-              <% if(correo) { %>
               <h4>Bienvenido</h4> 
               <h2><%= correo %></h2> 
-                <% }else{ %>
-              <h2>Error: datos mal ingresados</h2>
-              <%   } %>
             </div>
+
+            <% }else{ %>
+            <!-- Sino le muestra un error -->
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <h2><%= err %></h2>
+              <button class="btn btn-primary" type="button">Intentar nuevamente</button>
+            </div>
+              <% } %>            
           </div>
 
     </body>
