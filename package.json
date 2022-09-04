@@ -22,10 +22,10 @@
     "express-generator": "^4.16.1",
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.4"
+    "mongoose": "^6.5.4",
+    "ejs": "^3.1.8"
   },
   "devDependencies": {
-    "ejs": "^3.1.8",
     "eslint": "^8.23.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1"
