@@ -78,7 +78,7 @@ exports.registro = async (req, res) => {
 
   if (userNameExiste) {
     return res.status(400).json({
-      error: "Username ya registrado",
+      error: `Nombre de usuario: ${req.body.username} Ya está en uso.`,
     });
   }
 
