@@ -10,7 +10,7 @@ exports.verificaToken = (req, res, next) => {
     req.usuario = verificado;
     next();
   } catch (error) {
-    return res.render("./paginas/login", {
+    res.render("./paginas/login", {
       err: "acceso no autorizado / ingrese nuevamente",
       hola: "hola",
     });

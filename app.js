@@ -5,7 +5,7 @@ const path = require("path");
 const db = require("./src/conexionDb");
 
 const app = express();
-const port = process.env.PUERTO || 4000;
+const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
