@@ -13,8 +13,8 @@ exports.login = async (req, res) => {
     $or: [{ email: req.body.email }, { username: req.body.email }],
   });
   if (!usernameExiste) {
-    return res.status(401).json({
-      error: "Usuario o correo incorrecto",
+    return res.render("./paginas/inicio", {
+      err: "Usuario no encontrado",
     });
   }
   try {
@@ -47,7 +47,9 @@ exports.login = async (req, res) => {
 
           // callback con la respuesta negativa en caso que las claves no coincidan
         } else {
-          return res.status(401).json({ error: "Clave no coincide" });
+          return res.render("./paginas/inicio", {
+            err: "Ingreso incorrecto, verifique sus datos",
+          });
         }
       }
     );
