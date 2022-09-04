@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-exports.verificaToken = (req, res, next) => {
+exports.tieneToken = (req, res, next) => {
   // busca en el header el token
   const token = req.header("auth-token");
   //si el token no existe envía error
@@ -10,9 +10,8 @@ exports.verificaToken = (req, res, next) => {
     req.usuario = verificado;
     next();
   } catch (error) {
-    res.render("./paginas/login", {
+    return res.render("./paginas/login", {
       err: "acceso no autorizado / ingrese nuevamente",
-      hola: "hola",
     });
   }
 };
