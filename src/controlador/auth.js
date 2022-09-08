@@ -1,10 +1,21 @@
 const Usuario = require("../modelos/Usuario");
 const { hash } = require("../funciones/hash");
 const jwt = require("jsonwebtoken");
+const jwt_decode = require("jwt-decode");
 const bcrypt = require("bcrypt");
 
-exports.getlogin = (req, res) => {
-  res.json({ err: null, correo: null });
+exports.getlogin = async (req, res) => {
+  try {
+    const token = req.headers["auth-token"];
+    if (!token) {
+      return res.json({ error: "Inicia sesión para ver tus datos" });
+    }
+    const { id } = jwt_decode(token);
+    const usuarioActivo = await Usuario.findOne({ _id: id });
+    res.json(usuarioActivo);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 exports.login = async (req, res) => {
@@ -14,7 +25,7 @@ exports.login = async (req, res) => {
   });
   if (!usernameExiste) {
     return res.json({
-      err: "Usuario no encontrado",
+      error: "Usuario no encontrado",
     });
   }
   try {
@@ -41,14 +52,13 @@ exports.login = async (req, res) => {
           );
 
           // envío del token al header
-          res.set({ "auth-token": token });
-          res.json({ err: null });
+          res.status(200).append("auth-token", token).redirect("/auth");
           //res.status(200).append("auth-token", token).json({ token });
 
           // callback con la respuesta negativa en caso que las claves no coincidan
         } else {
           return res.json({
-            err: "Ingreso incorrecto, verifique sus datos",
+            error: "Ingreso incorrecto, verifique sus datos",
           });
         }
       }

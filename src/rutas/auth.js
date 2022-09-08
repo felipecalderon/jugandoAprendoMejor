@@ -1,8 +1,9 @@
 const express = require("express");
-const { login, registro } = require("../controlador/auth.js");
+const { login, getlogin, registro } = require("../controlador/auth.js");
 const { check } = require("express-validator");
 const ruta = express.Router();
 
+ruta.get("/", getlogin);
 ruta.post("/login", login);
 
 ruta.post("/registro", registro);
