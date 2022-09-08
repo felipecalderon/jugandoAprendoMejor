@@ -11,9 +11,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // index page
-app.use("/auth", require("./src/rutas/auth.js"));
+app.use("/auth", require("./src/rutas/auth"));
 
-app.use("/", require("./src/rutas/inicio.js"));
+app.use("/", require("./src/rutas/inicio"));
+
+app.use("/texto", require("./src/rutas/palabras"));
 
 app.use("*", (req, res) => {
   res.send("error 404");

@@ -10,7 +10,7 @@ exports.tieneToken = (req, res, next) => {
     req.usuario = verificado;
     next();
   } catch (error) {
-    return res.render("./paginas/login", {
+    return res.json({
       err: "acceso no autorizado / ingrese nuevamente",
     });
   }

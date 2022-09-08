@@ -4,8 +4,6 @@ const { inicio } = require("../controlador/inicio");
 const { tieneToken } = require("../middlewares/validaToken");
 const ruta = express.Router();
 
-ruta.get("/", inicio);
+module.exports = ruta.get("/", tieneToken, inicio);
 
 //ruta.get("/login", tieneToken, getlogin);
-
-module.exports = ruta;
