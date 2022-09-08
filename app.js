@@ -10,10 +10,6 @@ const port = process.env.PORT || 4000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Set 'views' directory for any views
-app.set("views", path.join(__dirname, "/src/vistas"));
-app.set("view engine", "ejs");
-
 // index page
 app.use("/auth", require("./src/rutas/auth.js"));
 

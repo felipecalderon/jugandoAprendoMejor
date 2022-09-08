@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 exports.getlogin = (req, res) => {
-  res.render("./paginas/login", { err: null, correo: null });
+  res.json({ err: null, correo: null });
 };
 
 exports.login = async (req, res) => {
@@ -13,7 +13,7 @@ exports.login = async (req, res) => {
     $or: [{ email: req.body.email }, { username: req.body.email }],
   });
   if (!usernameExiste) {
-    return res.render("./paginas/inicio", {
+    return res.json({
       err: "Usuario no encontrado",
     });
   }
@@ -42,19 +42,19 @@ exports.login = async (req, res) => {
 
           // envío del token al header
           res.set({ "auth-token": token });
-          res.render("./paginas/inicio", { err: null });
+          res.json({ err: null });
           //res.status(200).append("auth-token", token).json({ token });
 
           // callback con la respuesta negativa en caso que las claves no coincidan
         } else {
-          return res.render("./paginas/inicio", {
+          return res.json({
             err: "Ingreso incorrecto, verifique sus datos",
           });
         }
       }
     );
   } catch (error) {
-    res.json({ error });
+    console.log(error);
   }
 };
 
