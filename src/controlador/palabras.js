@@ -1,11 +1,30 @@
 const Palabra = require("../modelos/Palabra");
 
 exports.verPalabra = async (req, res) => {
-  const palabras = await Palabra.find();
-  if (palabras.length === 0) {
-    return res.json({ error: "No se encuentran palabras" });
+  try {
+    const palabras = await Palabra.find();
+    if (palabras.length === 0) {
+      return res.json({ error: "No se encuentran palabras" });
+    }
+    res.json(palabras);
+  } catch (error) {
+    console.log(error);
   }
-  res.json(palabras);
+};
+
+exports.verPalabraSola = async (req, res) => {
+  try {
+    const { nombre } = req.params;
+    if (nombre) {
+      const palabra = await Palabra.findOne({ palabra: nombre });
+      if (palabra === null) {
+        return res.json({ error: `No se encontró: ${nombre}` });
+      }
+      return res.json(palabra);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 exports.crearPalabra = async (req, res) => {
