@@ -2,7 +2,7 @@ const Usuario = require("../modelos/Usuario");
 
 exports.inicio = async (req, res) => {
   try {
-    usuarios = Usuario.find();
+    usuarios = await Usuario.find();
     if (!usuarios) {
       return res.json({ err: "No hay usuarios" });
     }
@@ -10,5 +10,4 @@ exports.inicio = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-  res.json({ err: null });
 };
