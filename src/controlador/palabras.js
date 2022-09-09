@@ -73,8 +73,7 @@ exports.crearPalabra = async (req, res) => {
     // almacena algún error si lo hubiese
     const nuevaPalabra = await palabraCreada.save();
     res.json({
-      error: null,
-      usuarioCreado: nuevaPalabra,
+      Palabra: nuevaPalabra,
     });
   } catch (error) {
     res.status(400).json(error);
