@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const jwt_decode = require("jwt-decode");
 const bcrypt = require("bcrypt");
 
+// AUTH
 exports.getlogin = async (req, res) => {
   try {
     const token = req.headers["auth-token"];
@@ -17,7 +18,7 @@ exports.getlogin = async (req, res) => {
     console.log(error);
   }
 };
-
+// AUTH/LOGIN
 exports.login = async (req, res) => {
   // Primero buscamos si el correo coincide con la data en mongo
   const usernameExiste = await Usuario.findOne({
@@ -52,7 +53,7 @@ exports.login = async (req, res) => {
           );
 
           // envío del token al header
-          res.status(200).append("auth-token", token).redirect("/auth");
+          res.status(200).append("auth-token", token).json(usernameExiste);
           //res.status(200).append("auth-token", token).json({ token });
 
           // callback con la respuesta negativa en caso que las claves no coincidan
@@ -68,23 +69,7 @@ exports.login = async (req, res) => {
   }
 };
 
-/*
-  const { correo, clave } = req.body;
-  try {
-    if (correo) {
-      return res.render("./paginas/login", {
-        correo,
-        err: null,
-      });
-    }
-    res.render("./paginas/login", {
-      err: "Usuario o clave incorrectos",
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-*/
+// AUTH/REGISTRO
 exports.registro = async (req, res) => {
   const userNameExiste = await Usuario.findOne({ username: req.body.username });
 
@@ -121,20 +106,3 @@ exports.registro = async (req, res) => {
     res.status(400).json(error);
   }
 };
-/*
-  const { correo, clave } = req.body;
-  try {
-    if (correo) {
-      return res.render("./paginas/login", {
-        correo,
-        err: null,
-      });
-    }
-    res.render("./paginas/login", {
-      err: "Usuario o clave incorrectos",
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-*/

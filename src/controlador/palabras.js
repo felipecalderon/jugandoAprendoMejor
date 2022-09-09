@@ -85,11 +85,6 @@ exports.crearPalabra = async (req, res) => {
 exports.eliminarPalabra = async (req, res) => {
   try {
     let { nombre } = req.params;
-    if (!nombre) {
-      return res.status(400).json({
-        error: `Ingrese nombre como parámetro ej: .../texto/BAILAR`,
-      });
-    }
     let nombremin = nombre.toString().toLowerCase();
     const palabra = await Palabra.findOneAndDelete({ palabra: nombremin });
     if (!palabra) {

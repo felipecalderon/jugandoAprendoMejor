@@ -1,11 +1,10 @@
 const express = require("express");
-const { login, getlogin, registro } = require("../controlador/auth.js");
-const { check } = require("express-validator");
 const ruta = express.Router();
+const { login, getlogin, registro } = require("../controlador/auth.js");
+const { validaLogin } = require("./../validadores/auth");
 
-ruta.get("/", getlogin);
-ruta.post("/login", login);
-
+ruta.post("/login" /*, validaLogin*/, login); //VALIDALOGIN DA ERROR
 ruta.post("/registro", registro);
+ruta.get("/", getlogin);
 
 module.exports = ruta;
