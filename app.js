@@ -1,7 +1,7 @@
+console.clear();
 const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
-const path = require("path");
 const db = require("./src/conexionDb");
 
 const app = express();

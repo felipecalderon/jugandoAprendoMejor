@@ -12,7 +12,7 @@ exports.getlogin = async (req, res) => {
     }
     const { id } = jwt_decode(token);
     const usuarioActivo = await Usuario.findOne({ _id: id });
-    res.json(usuarioActivo);
+    res.append("auth-token", token).json(usuarioActivo);
   } catch (error) {
     console.log(error);
   }

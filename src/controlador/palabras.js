@@ -55,8 +55,13 @@ exports.actualizarPalabra = async (req, res) => {
 exports.crearPalabra = async (req, res) => {
   try {
     let { palabra, pista } = req.body;
-    palabramin = palabra.toString().toLowerCase();
-    pistamin = pista.toString().toLowerCase();
+    if (!palabra || !pista) {
+      return res.status(400).json({
+        error: `Necesita ingresar correctamente palabra y pista`,
+      });
+    }
+    let palabramin = palabra.toString().toLowerCase();
+    let pistamin = pista.toString().toLowerCase();
 
     const palabraExiste = await Palabra.findOne({ palabra: palabramin });
     if (palabraExiste) {
@@ -65,17 +70,35 @@ exports.crearPalabra = async (req, res) => {
       });
     }
     // crea palabra
-    const palabraCreada = new Palabra({
+    const palabraCreada = Palabra.create({
       palabra: palabramin,
       pista: [pistamin],
     });
-
-    // almacena algún error si lo hubiese
-    const nuevaPalabra = await palabraCreada.save();
     res.json({
-      Palabra: nuevaPalabra,
+      Palabra: await palabraCreada,
     });
   } catch (error) {
     res.status(400).json(error);
+  }
+};
+
+exports.eliminarPalabra = async (req, res) => {
+  try {
+    let { nombre } = req.params;
+    if (!nombre) {
+      return res.status(400).json({
+        error: `Ingrese nombre como parámetro ej: .../texto/BAILAR`,
+      });
+    }
+    let nombremin = nombre.toString().toLowerCase();
+    const palabra = await Palabra.findOneAndDelete({ palabra: nombremin });
+    if (!palabra) {
+      return res.status(400).json({
+        error: `Palabra |${nombremin}| no encontrada`,
+      });
+    }
+    res.json(`Palabra ${nombremin} eliminada`);
+  } catch (error) {
+    console.log(error);
   }
 };
