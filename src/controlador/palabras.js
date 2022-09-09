@@ -27,23 +27,51 @@ exports.verPalabraSola = async (req, res) => {
   }
 };
 
-exports.crearPalabra = async (req, res) => {
-  const palabraExiste = await Palabra.findOne({ palabra: req.body.palabra });
-
-  if (palabraExiste) {
-    return res.status(400).json({
-      error: `La palabra ${req.body.palabra} ya está en el sistema.`,
-    });
-  }
-  // crea usuario
-  const palabra = new Palabra({
-    palabra: req.body.palabra,
-    pistas: [req.body.pistas],
-  });
-
-  // almacena algún error si lo hubiese
+exports.actualizarPalabra = async (req, res) => {
   try {
-    const nuevaPalabra = await palabra.save();
+    const { nombre } = req.params;
+    let { pista } = req.body;
+
+    nombremin = nombre.toString().toLowerCase();
+    pistamin = pista.toString().toLowerCase();
+
+    const palabraExiste = await Palabra.findOne({ palabra: nombremin });
+    console.log(palabraExiste);
+    if (palabraExiste === null) {
+      return res.status(400).json({
+        error: `La palabra |${nombremin}| NO existe en el sistema, añadala.`,
+      });
+    }
+    actualizaPala = await Palabra.findOneAndUpdate(
+      { palabra: nombremin },
+      { $set: { pista: pistamin } }
+    );
+    res.json(actualizaPala);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+exports.crearPalabra = async (req, res) => {
+  try {
+    let { palabra, pista } = req.body;
+    palabramin = palabra.toString().toLowerCase();
+    pistamin = pista.toString().toLowerCase();
+
+    const palabraExiste = await Palabra.findOne({ palabra: palabramin });
+    if (palabraExiste) {
+      return res.status(400).json({
+        error: `La palabra |${palabramin}| ya está en el sistema.`,
+      });
+    }
+    // crea palabra
+    const palabraCreada = new Palabra({
+      palabra: palabramin,
+      pista: [pistamin],
+    });
+
+    // almacena algún error si lo hubiese
+    const nuevaPalabra = await palabraCreada.save();
     res.json({
       error: null,
       usuarioCreado: nuevaPalabra,

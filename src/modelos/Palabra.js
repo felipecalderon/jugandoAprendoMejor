@@ -6,7 +6,7 @@ const palabraSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  pistas: { type: Array },
+  pista: { type: Array },
 });
 
 module.exports = mongoose.model("Palabra", palabraSchema);
