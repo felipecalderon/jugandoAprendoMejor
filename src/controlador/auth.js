@@ -20,6 +20,7 @@ exports.getlogin = async (req, res) => {
 };
 // AUTH/LOGIN
 exports.login = async (req, res) => {
+
   // Primero buscamos si el correo coincide con la data en mongo
   const usernameExiste = await Usuario.findOne({
     $or: [{ email: req.body.email }, { username: req.body.email }],

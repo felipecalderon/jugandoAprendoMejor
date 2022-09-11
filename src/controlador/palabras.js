@@ -27,6 +27,21 @@ exports.verPalabraSola = async (req, res) => {
   }
 };
 
+exports.agregarPalabraUsuario = async (req, res) => {
+  try {
+    const { nombre } = req.body;
+    if (nombre) {
+      const palabra = await Palabra.findOne({ palabra: nombre });
+      if (palabra === null) {
+        return res.json({ error: `No se encontró: ${nombre}` });
+      }
+      return res.json(palabra);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 exports.actualizarPalabra = async (req, res) => {
   try {
     const { nombre } = req.params;

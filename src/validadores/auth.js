@@ -1,11 +1,22 @@
-const { check } = require("express-validator");
-const { funcionValida } = require("./../funciones/validadores");
-const validaLogin = [
-  check("email").exists().notEmpty(),
-  check("clave").exists().notEmpty(),
-  (req, res, next) => {
-    return funcionValida(req, res, next);
-  },
-];
+const joi = require("joi");
+const { validador } = require("../funciones/validador");
 
-module.exports = validaLogin;
+const esquemaLogin = joi.object({
+  email: joi.string().email({
+    minDomainSegments: 2,
+    tlds: { allow: ["com", "net"] },
+  }),
+  clave: joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+});
+
+const valida = validador(esquemaLogin);
+
+exports.validaLogin = (req, res, next) => {
+  try {
+    const { error, value } = valida(req.body);
+    if (error) throw error
+    next();
+  } catch (error) {
+    return res.json(error.details);
+  }
+};

@@ -28,6 +28,13 @@ const usuarioSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    palabras: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Palabra",
+        default: null,
+      },
+    ],
   },
   {
     timestamps: { createdAt: "created", updatedAt: "updated" },

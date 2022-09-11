@@ -5,6 +5,7 @@ const {
   verPalabraSola,
   actualizarPalabra,
   eliminarPalabra,
+  agregarPalabraUsuario,
 } = require("../controlador/palabras");
 
 const { tieneToken } = require("../middlewares/validaToken");
@@ -15,5 +16,6 @@ ruta.get("/:nombre", verPalabraSola);
 ruta.put("/:nombre", actualizarPalabra);
 ruta.delete("/:nombre", eliminarPalabra);
 ruta.post("/", crearPalabra);
+ruta.post("/agregar", agregarPalabraUsuario);
 
 module.exports = ruta;
