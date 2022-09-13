@@ -11,11 +11,11 @@ const {
 const { tieneToken } = require("../middlewares/validaToken");
 const ruta = express.Router();
 
-ruta.get("/", verPalabra);
-ruta.get("/:nombre", verPalabraSola);
-ruta.put("/:nombre", actualizarPalabra);
-ruta.delete("/:nombre", eliminarPalabra);
-ruta.post("/", crearPalabra);
-ruta.post("/agregar", agregarPalabraUsuario);
+ruta.get("/", tieneToken, verPalabra);
+ruta.get("/:nombre", tieneToken, verPalabraSola);
+ruta.put("/:nombre", tieneToken, actualizarPalabra);
+ruta.delete("/:nombre", tieneToken, eliminarPalabra);
+ruta.post("/", tieneToken, crearPalabra);
+ruta.post("/agregar", tieneToken, agregarPalabraUsuario);
 
 module.exports = ruta;

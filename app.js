@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Leer las rutas
+// Leer las rutas de la carpeta rutas (parece redundante pero es importante, me salió verso sin esfuerzo)
 const nomrutas = __dirname + '/src/rutas'
   try {
     const archivos = fs.readdirSync(nomrutas);

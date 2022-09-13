@@ -8,11 +8,8 @@ const bcrypt = require("bcrypt");
 exports.getlogin = async (req, res) => {
   try {
     const token = req.headers["auth-token"];
-    if (!token) {
-      return res.json({ error: "Inicia sesión para ver tus datos" });
-    }
     const { id } = jwt_decode(token);
-    const usuarioActivo = await Usuario.findOne({ _id: id });
+    const usuarioActivo = await Usuario.findOne({ _id: id }).populate('palabras');
     res.append("auth-token", token).json(usuarioActivo);
   } catch (error) {
     console.log(error);

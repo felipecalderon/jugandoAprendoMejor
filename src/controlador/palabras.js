@@ -1,4 +1,5 @@
 const Palabra = require("../modelos/Palabra");
+const jwt_decode = require("jwt-decode");
 
 exports.verPalabra = async (req, res) => {
   try {
@@ -28,14 +29,18 @@ exports.verPalabraSola = async (req, res) => {
 };
 
 exports.agregarPalabraUsuario = async (req, res) => {
+  const Usuario = require("../modelos/Usuario");
   try {
     const { nombre } = req.body;
+    const token = req.headers["auth-token"];
+    const { id } = jwt_decode(token);
     if (nombre) {
       const palabra = await Palabra.findOne({ palabra: nombre });
       if (palabra === null) {
         return res.json({ error: `No se encontró: ${nombre}` });
       }
-      return res.json(palabra);
+    const usuario = await Usuario.findByIdAndUpdate({ _id: id }, {palabras: palabra._id});
+    return res.json(usuario);
     }
   } catch (error) {
     console.log(error);
@@ -107,7 +112,7 @@ exports.eliminarPalabra = async (req, res) => {
         error: `Palabra |${nombremin}| no encontrada`,
       });
     }
-    res.json(`Palabra ${nombremin} eliminada`);
+    res.json({exito: `Palabra ${nombremin} eliminada`});
   } catch (error) {
     console.log(error);
   }
