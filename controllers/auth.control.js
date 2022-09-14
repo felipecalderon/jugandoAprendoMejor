@@ -1,5 +1,5 @@
-const Usuario = require("../modelos/Usuario");
-const { hash } = require("../funciones/hash");
+const Usuario = require("../models/auth.model");
+const { hash } = require("../handle/hash");
 const jwt = require("jsonwebtoken");
 const jwt_decode = require("jwt-decode");
 const bcrypt = require("bcrypt");
@@ -10,22 +10,21 @@ exports.getlogin = async (req, res) => {
     const token = req.headers["auth-token"];
     const { id } = jwt_decode(token);
     const usuarioActivo = await Usuario.findOne({ _id: id }).populate('palabras');
-    res.append("auth-token", token).json(usuarioActivo);
+    res.append("auth-token", token).render('index', {usuarioActivo});
   } catch (error) {
-    console.log(error);
+    res.render('login', {err: 'Credenciales no válidas'});
   }
 };
 // AUTH/LOGIN
 exports.login = async (req, res) => {
 
+  let {email, clave} = req.body
   // Primero buscamos si el correo coincide con la data en mongo
   const usernameExiste = await Usuario.findOne({
     $or: [{ email: req.body.email }, { username: req.body.email }],
   });
   if (!usernameExiste) {
-    return res.json({
-      error: "Usuario no encontrado",
-    });
+    return res.render('login', {err: 'Credenciales no válidas', email, clave});
   }
   try {
     bcrypt.compare(
@@ -51,14 +50,12 @@ exports.login = async (req, res) => {
           );
 
           // envío del token al header
-          res.status(200).append("auth-token", token).json(usernameExiste);
-          //res.status(200).append("auth-token", token).json({ token });
+          res.append("auth-token", token).render('index', {usernameExiste});
+
 
           // callback con la respuesta negativa en caso que las claves no coincidan
         } else {
-          return res.json({
-            error: "Ingreso incorrecto, verifique sus datos",
-          });
+          return res.render('login', {err: 'Credenciales no válidas', email, clave});
         }
       }
     );

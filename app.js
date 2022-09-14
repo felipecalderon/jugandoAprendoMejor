@@ -1,37 +1,39 @@
-console.clear();
-require("dotenv").config();
+console.clear()
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-//configuraciones y requerimientos
-const express = require("express");
-const db = require("./src/conexionDb");
-const cors = require("cors");
-const fs = require("fs")
+const db = require("./conexionDb");
 const app = express();
-const port = process.env.PORT || 4000;
 
-// middlewares
-app.use(cors());
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Leer las rutas de la carpeta rutas (parece redundante pero es importante, me salió verso sin esfuerzo)
-const nomrutas = __dirname + '/src/rutas'
-  try {
-    const archivos = fs.readdirSync(nomrutas);
-    archivos.forEach(archivo => {
-      let nombre = archivo.split(".").shift()
-      app.use(`/${nombre}`, require(`${nomrutas}/${archivo}`));
-    })
-} catch (error) {
-  console.log(error);
-}
+app.use('/api', require("./routes/index"))
 
-// si la ruta no existe
-app.use("*", (req, res) => {
-  res.send("error 404 | no encontrado");
+// catch 404 and forward to error handler
+app.use('*', (req, res) => {
+  res.send('Kgamos, error 404')
 });
 
-//servidor a la escucha
-app.listen(port, () => {
-  console.log("Servidor activado:", "http://localhost:" + port);
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
+
+module.exports = app;

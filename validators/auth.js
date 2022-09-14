@@ -1,5 +1,5 @@
 const joi = require("joi");
-const { validador } = require("../funciones/validador");
+const { validador } = require("../handle/validador");
 
 const esquemaLogin = joi.object({
   email: joi.string().email({
@@ -12,11 +12,18 @@ const esquemaLogin = joi.object({
 const valida = validador(esquemaLogin);
 
 exports.validaLogin = (req, res, next) => {
+  let {email, clave} = req.body
   try {
     const { error, value } = valida(req.body);
     if (error) throw error
     next();
   } catch (error) {
-    return res.json(error.details);
+    let {details} = error
+    console.log(email, clave);
+    
+    details.forEach(element => {
+      console.log(element.message);
+    });
+    return res.render("login", {err: JSON.stringify(details), email, clave});
   }
 };

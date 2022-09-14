@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es_ES">
+<%- include('./partes/header'); %>
+<%- include('./partes/menu'); %>
+<body>
+  <!-- Modal Registro -->
+  <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">  
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Crea tu cuenta en pocos pasos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/api/auth/registro" method="POST">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Ingrese su nombre</label>
+            <input name="nombre" type="text" class="form-control" id="nombre">
+          </div>
+          <div class="mb-3">
+            <label for="apellido" class="form-label">Ingrese su apellido</label>
+            <input name="apellido" type="text" class="form-control" id="apellido">
+          </div>
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Ingrese su teléfono</label>
+            <input name="telefono" type="number" class="form-control" id="telefono">
+          </div>
+          <div class="mb-3">
+            <label for="username" class="form-label">Ingrese un nombre de Usuario</label>
+            <input name="username" type="text" class="form-control" id="username">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Ingrese su correo</label>
+            <input name="email" type="email" class="form-control" id="email">
+          </div>
+          <div class="mb-3">
+            <label for="clave" class="form-label">Clave / Contraseña</label>
+            <input name="clave" type="password" class="form-control" id="clave">
+          </div>
+          <div class="mb-3 form-check">
+            <label class="form-check-label" for="recordar">Acepto los términos y condiciones</label>
+            <input type="checkbox" class="form-check-input" id="recordar">
+          </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="row justify-content-center">
+        <div class="col-xl-6 col-10">
+          <% if (err) { %>
+            <% if (err.details) { %> AAAAAAAA
+              <% } %>
+          <div class="alert alert-warning d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              <%= err %>
+            </div>
+          </div>
+          <% } %>
+          <h3>Ingresar</h3>
+          <form action="/api/auth/login" method="POST">
+              <div class="mb-3">
+                <label for="email" class="form-label">Ingrese Correo o Nombre de Usuario</label>
+                <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">No comparta su acceso con nadie</div>
+              </div>
+              <div class="mb-3">
+                <label for="clave" class="form-label">Clave / Contraseña</label>
+                <input name="clave" type="password" class="form-control" id="clave">
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Recordar</label>
+              </div>
+              <button type="submit" class="btn btn-primary">Ingresar</button>
+          </form>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-secondary mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          No tengo cuenta
+        </button>
+      </div>
+
+  <footer>
+    <%- include('./partes/footer'); %>
+  </footer>
+</body>
+
+</html>

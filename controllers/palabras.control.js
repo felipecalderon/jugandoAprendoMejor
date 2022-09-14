@@ -1,4 +1,4 @@
-const Palabra = require("../modelos/Palabra");
+const Palabra = require("../models/palabra.model");
 const jwt_decode = require("jwt-decode");
 
 exports.verPalabra = async (req, res) => {
