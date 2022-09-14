@@ -24,6 +24,6 @@ exports.validaLogin = (req, res, next) => {
     details.forEach(element => {
       console.log(element.message);
     });
-    return res.render("login", {err: JSON.stringify(details), email, clave});
+    return res.render("login/", {err: details, email, clave});
   }
 };

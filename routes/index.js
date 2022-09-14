@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('login', { err: null, title: 'Express' });
+  res.render('login/', { err: null });
 });
 
 // Leer las rutas de la presente carpeta (parece redundante pero es importante, me salió verso sin esfuerzo 😎)
