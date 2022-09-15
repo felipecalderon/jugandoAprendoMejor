@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/', require("./controllers/inicio.control").Inicio);
 app.use('/api', require("./routes/index"))
 
 // catch 404 and forward to error handler
