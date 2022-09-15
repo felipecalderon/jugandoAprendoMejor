@@ -1,4 +1,3 @@
-const joi = require("joi");
+exports.validador = (schema) => (payload) => schema.validate(payload, { abortEarly: false });
 
-exports.validador = (schema) => (payload) =>
-  schema.validate(payload, { abortEarly: false });
+//exports.validador = (schema) => schema.validate({}, { abortEarly: false });

@@ -6,25 +6,27 @@ const bcrypt = require("bcrypt");
 
 // AUTH
 exports.getlogin = async (req, res) => {
+  
   try {
     const token = req.headers["auth-token"];
     const { id } = jwt_decode(token);
     const usuarioActivo = await Usuario.findOne({ _id: id }).populate('palabras');
     res.append("auth-token", token).render('index', {usuarioActivo});
   } catch (error) {
-    res.render('login', {err: 'Credenciales no válidas'});
+    res.render('login/', {err: 'Credenciales no válidas'});
   }
 };
 // AUTH/LOGIN
 exports.login = async (req, res) => {
-
   let {email, clave} = req.body
   // Primero buscamos si el correo coincide con la data en mongo
   const usernameExiste = await Usuario.findOne({
     $or: [{ email: req.body.email }, { username: req.body.email }],
   });
   if (!usernameExiste) {
-    return res.render('login', {err: 'Credenciales no válidas', email, clave});
+    return res.render('login/', {err: 'Usuario no encontrado', datos: {
+      email, clave
+    }});
   }
   try {
     bcrypt.compare(
@@ -50,22 +52,28 @@ exports.login = async (req, res) => {
           );
 
           // envío del token al header
-          res.append("auth-token", token).render('index', {usernameExiste});
+          res.cookie("auth-token", token, {httpOnly: true}).render('index', {usernameExiste});
 
 
           // callback con la respuesta negativa en caso que las claves no coincidan
         } else {
-          return res.render('login', {err: 'Credenciales no válidas', email, clave});
+          return res.render('login/', {err: 'Credenciales no válidas', datos: {
+            email, clave
+          }});
         }
       }
     );
   } catch (error) {
-    console.log(error);
+    return res.render('login/', {err: error, datos: {
+      email, clave
+    }});
   }
 };
 
 // AUTH/REGISTRO
 exports.registro = async (req, res) => {
+  
+  let {email, clave} = req.body
   const userNameExiste = await Usuario.findOne({ username: req.body.username });
 
   if (userNameExiste) {
@@ -93,11 +101,10 @@ exports.registro = async (req, res) => {
   // almacena algún error si lo hubiese
   try {
     const UsuarioBD = await usuario.save();
-    res.json({
-      error: null,
-      usuarioCreado: UsuarioBD,
-    });
+    res.render('login/', {err: 'Cuenta creada, ingresa a la app con tus datos'});
   } catch (error) {
-    res.status(400).json(error);
+    res.render('login/', {err: error, datos: {
+      email, clave
+    }});
   }
 };

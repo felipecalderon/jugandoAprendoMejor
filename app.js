@@ -18,15 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', function(req, res, next) {
-  res.render('login/', { err: null });
-});
-
 app.use('/api', require("./routes/index"))
 
 // catch 404 and forward to error handler
 app.use('*', (req, res) => {
-  res.send('Kgamos, error 404')
+  res.send('Error 404 | RUTA NO ECONTRADA')
 });
 
 // error handler

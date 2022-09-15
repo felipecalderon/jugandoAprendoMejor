@@ -6,11 +6,18 @@
           <% if (err) { %>
             <%- include('./error'); %>
           <% } %>
-          <h3>Ingresar</h3>
+          <h3 class="mt-2">¿Quieres jugar al colgao?</h3>
+          <p class="mb-3 lead">Ingresa o regístrate para jugar</p>
+          <p>----------------</p>
           <form action="/api/auth/login" method="POST">
             <div class="mb-3">
                 <label for="email" class="form-label">Ingrese Correo o Nombre de Usuario</label>
-                <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" 
+                value="
+                <% if (err) { %>
+                <%- datos.email %>
+                <% } %>"
+                >
                 <div id="emailHelp" class="form-text">No comparta su acceso con nadie</div>
               </div>
               <div class="mb-3">
