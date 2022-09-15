@@ -1,9 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page /API. */
-router.get('/', require("./../controllers/inicio.control").Inicio);
-
 // Leer las rutas de la presente carpeta (parece redundante pero es importante, me salió verso sin esfuerzo 😎)
 const fs = require("fs")
 const nomrutas = __dirname

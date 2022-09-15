@@ -73,7 +73,7 @@ exports.login = async (req, res) => {
 // AUTH/REGISTRO
 exports.registro = async (req, res) => {
   
-  let {email, clave} = req.body
+  let {email} = req.body
   const userNameExiste = await Usuario.findOne({ username: req.body.username });
 
   if (userNameExiste) {
@@ -103,8 +103,10 @@ exports.registro = async (req, res) => {
     const UsuarioBD = await usuario.save();
     res.render('login/', {err: 'Cuenta creada, ingresa a la app con tus datos'});
   } catch (error) {
-    res.render('login/', {err: error, datos: {
-      email, clave
-    }});
+    res.render('login/', {err: error, datos: {email}});
   }
 };
+ exports.cerrarsesion = (req, res, next) => {
+  res.clearCookie("auth-token");
+  next()
+ }
