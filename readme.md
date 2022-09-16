@@ -8,6 +8,7 @@ Rutas API
         -POST | Registro Form:  /api/auth/registro
 
 
+
     Palabras: 
         -POST | Crear palabra:         /api/palabras/
         -POST | Actualizar palabra:    /api/palabras/nombrepalabra
