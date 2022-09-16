@@ -11,4 +11,4 @@ Rutas API
         -POST | Eliminar palabra:      /api/palabras/nombrepalabra
     }
 
-Juego del tipo "COLGADO" para enviar palabras que descubran otros competidores.
+Juego del tipo "COLGADO" para enviar palabras que descubran otros competidores
