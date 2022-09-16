@@ -106,7 +106,7 @@ exports.registro = async (req, res) => {
     res.render('login/', {err: error, datos: {email}});
   }
 };
- exports.cerrarsesion = (req, res, next) => {
+ exports.cerrarsesion = (req, res) => {
   res.clearCookie("auth-token");
-  next()
+  return res.render('login/', {err: 'Has cerrado tu sesión', datos: ''});
  }
