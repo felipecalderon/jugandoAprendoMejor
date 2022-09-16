@@ -4,8 +4,8 @@ Rutas API
     
 
     Usuarios: 
-        -POST | Login Form:             /api/auth/login
-        -POST | Registro Form:          /api/auth/registro
+        -POST | Login Form:            /api/auth/login
+        -POST | Registro Form:         /api/auth/registro
 
     Palabras: 
         -POST | Crear palabra:         /api/palabras/
